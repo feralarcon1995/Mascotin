@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+}
+
+
+:root {
+    --main-color: #ffe44a;
+    --main-color-variant: #e2c313;
+    --bg-color: #18191A;
+    --bg-color-variant: #242526;
+    --bg-color-variant-second: #3A3B3C;
+    --color-white: #fff;
+    --color-light: #eee;
+
+    --transition: all 400ms ease;
+
+    --gradient: linear-gradient(rgba(0, 0, 0, 0.491), rgba(0, 0, 0, 0.365));
+
+    --poppins: 'Poppins', sans-serif;
+}
+
+
+/*LANDING STYLE*/
+
+.landing__bg {
+    background: var(--gradient), url(../assets/bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(255, 255, 255);
+    min-height: 100vh;
+    max-height: 100%;
+    width: 100%;
+    font-family: var(--poppins);
+
+}
+
+
+.landing__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    width: 100%;
+}
+
+.landing__nav--brand {
+    color: var(--color-white);
+    font-size: 3rem;
+    text-decoration: none;
+    font-weight: 500;
+    background-image: linear-gradient(var(--main-color), var(--main-color));
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 3px;
+    transition: var(--transition);
+}
+
+span {
+    color: var(--main-color);
+
+}
+
+.landing__nav--center {
+    display: flex;
+    width: 40%;
+    justify-content: space-around;
+
+}
+
+.landing__nav--login {
+    display: flex;
+    width: 20%;
+    justify-content: space-around;
+}
+
+.landing__nav--login a , .landing__nav--center a {
+    text-decoration: none;
+    color: var(--color-white);
+    font-size: 1.7rem;
+    font-weight: 500;
+    background-image: linear-gradient(var(--main-color), var(--main-color));
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 3px;
+    transition: var(--transition);
+}
+
+.landing__nav--login a:hover , .landing__nav--center a:hover , .landing__nav--brand:hover {
+    color: var(--main-color);
+    background-image: linear-gradient(var(--main-color), var(--main-color));
+    background-size: 100% 3px;
+}
+
+.landing__main{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 90vh;
+    max-height: 100%;
+    padding: 30px;
+    width: 50%;
+}
+   
+.landing__main p{
+    color: var(--color-light);
+    font-size: 2rem;
+}
+.landing__main h1{
+    color: var(--color-white);
+    font-size: 7rem;
+}
+
+.btn-landing{
+   background: var(--main-color-variant);
+   color: var(--color-white);
+   font-weight: bold;
+   transition: var(--transition);
+}
+
+.btn-landing:hover{
+    background-color: var(--main-color);
+}
+
+
+.landing__footer{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.landing__footer ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 15%;
+}
+
+.landing__footer ul li a{
+    font-size: 2rem;
+    color: var(--main-color);
+    transition: var(--transition);
+}
+
+.landing__footer ul li a:hover{
+    color: var(--main-color-variant);
+
+}
+
+.landing__footer p{
+    color: var(--color-light);
+    align-self: center;
+    padding: 0 10px;
+}
+
+/*LAINDING FINISH*/
