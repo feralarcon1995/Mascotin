@@ -39,7 +39,6 @@ class Usuario(models.Model):
     )
 
 
-
 ESPECIE_OPCIONES = (
     ("1", "Perro"),
     ("2", "Gato"),
@@ -95,20 +94,27 @@ class Animal(models.Model):
     discapacidad = models.CharField(max_length=150)
 
 
-class Publicacion(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Título")
-    content = models.TextField(verbose_name="Contenido")
-    published = models.DateTimeField(verbose_name="Fecha de publicación", default=now)
-    image = models.ImageField(verbose_name="Imagen", upload_to="blog", null=True, blank=True)
-    author = models.ForeignKey(User, verbose_name="Autor", on_delete=models.CASCADE)
-    categories = models.ManyToManyField(Category, verbose_name="Categorías", related_name="get_posts")
-    created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
-    updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")    
+# class Publicacion(models.Model):
+  # title = models.CharField(max_length=200, verbose_name="Título")
+  # content = models.TextField(verbose_name="Contenido")
+  # published = models.DateTimeField(verbose_name="Fecha de publicación", default=now)
+  # image = models.ImageField(verbose_name="Imagen", upload_to="blog", null=True, blank=True)
+  # author = models.ForeignKey(User, verbose_name="Autor", on_delete=models.CASCADE)
+  # categories = models.ManyToManyField(Category, verbose_name="Categorías", related_name="get_posts")
+  # created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+  # updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")    
 
-    class Meta:
-        verbose_name = "entrada"
-        verbose_name_plural = "entradas"
-        ordering = ['-created']
+  #  class Meta:
+      # verbose_name = "entrada"
+      # verbose_name_plural = "entradas"
+      # ordering = ['-created']
 
-    def __str__(self):
-        return self.title
+  #  def __str__(self):
+      #  return self.title
+
+
+# class Avatar(models.Model):
+    
+   # user = models.ForeignKey(user, on_delete=models.CASCADE)
+   # imagen = models.ImageField(upload_to='avatares', null=True, blank = True)
+

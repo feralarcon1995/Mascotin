@@ -1,0 +1,23 @@
+{% extends 'pinderApp/layout.html' %}
+{% load humanize %}
+{% block content %}
+
+{% for d in data %}
+
+<article class="posteo">
+    {% if d.imgPosteo %}
+    <img src="{{ d.imgPosteo.url}}"  class="posteo__img">
+    {% endif%}
+    <div class="posteo__info">
+        <h2>@{{d.user.username}}</h2>
+       
+        <time data-time="#"> <i class="bi bi-clock-history"></i> {{d.timestamp|naturaltime}}</time>
+        <div class="posteo__info__content">
+            <p>{{d.content}}</p>
+        </div>
+    </div>
+</article>
+
+{% endfor %}
+
+{% endblock %}
