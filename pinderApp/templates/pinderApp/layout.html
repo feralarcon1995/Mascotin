@@ -27,15 +27,23 @@
                 <li><a href="" class="app__nav__list--link"><i class="bi bi-house-door-fill"></i></a></li>
                 <li><a href="" class="app__nav__list--link"><i class="bi bi-heart-fill"></i></a></li>
                 <li><a href="" class="app__nav__list--link"><i class="bi bi-person-fill"></i></a></li>
-                <li><a href="" class="app__nav__list--link"><i class="bi bi-box-arrow-in-right"></i></a></li>
+                <li><a href="{% url 'logout' %}" class="app__nav__list--link"><i class="bi bi-box-arrow-in-right"></i></a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container">
-        <!-----------------
-          MESSAGES
-    ------------------>
+        
+        {% if messages %}
+          {% for message in messages %}
+              <div class="alert alert-success m-3" role="alert">
+                <p>
+                    {{message}}
+                </p>
+              </div>
+          {% endfor %}
+        {% endif %}
+
         <section class="crear__post">
             <input type="text" placeholder="Publicar mascota....">
             <article class="crear__post--fotos">
