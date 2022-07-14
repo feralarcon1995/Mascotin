@@ -1,29 +1,120 @@
-from distutils.command.upload import upload
-from email.mime import image
-from email.policy import default
 from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
 
 # Create your models here.
-class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-    image = models.ImageField(default='user.png')
 
-    def __str__(self) -> str:
-        return f'Perfil de {self.user.username}'
+SEXO_USUARIO = (
+    ("1", "Masculino"),
+    ("2", "Femenino"),
+    ("3", "Prefiero no decirlo")
+)
+
+ESPACIO_USUARIO = (
+    ("1", "Patio o Parque"),
+    ("2", "Terraza o Balcon"),
+    ("3", "No poseo"),
+)
+
+class Usuario(models.Model):
+    nombre = models.CharField(max_length=30)
+    apellido = models.CharField(max_length=30)
+    dni = models.PositiveIntegerField()
+    sexo = models.CharField(
+        max_length=30,
+        choices=SEXO_USUARIO
+    )
+    edad = models.PositiveIntegerField()
+    telefono = models.PositiveIntegerField()
+    email = models.EmailField()
+    localidad = models.CharField(max_length=50)
+    provincia = models.CharField(max_length=30)
+    ocupacion = models.CharField(max_length=50)
+    carga_horaria = models.PositiveIntegerField()
+    dias_homeoffice = models.PositiveIntegerField()
+    cantidad_hijos = models.PositiveIntegerField()
+    cantidad_mascotas = models.PositiveIntegerField()
+    especie_mascota = models.CharField(max_length=50)
+    espacio_abierto = models.CharField(
+        max_length=40,
+        choices=ESPACIO_USUARIO
+    )
 
 
-##POST
-class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts') 
-    timestamp = models.DateTimeField(default=timezone.now)
-    content = models.TextField(max_length=500)
-    imgPosteo = models.ImageField(upload_to='posteos', null=True)
+ESPECIE_OPCIONES = (
+    ("1", "Perro"),
+    ("2", "Gato"),
+)
+
+SEXO_OPCIONES = (
+    ("1", "Macho"),
+    ("2", "Hembra"),
+)
+
+TAMANIO_OPCIONES = (
+("1", "Grande"),
+("2", "Mediano"),
+("3", "Chico"),
+)
+
+CASTRACION_OPCIONES = (
+    ("1", "Si"),
+    ("2", "No"),
+)
+
+DESPARASITADO_OPCIONES = (
+    ("1", "Si"),
+    ("2", "No"),
+)
 
 
-    class Meta:
-        ordering = ['-timestamp']
+class Animal(models.Model):
+    nombre = models.CharField(max_length=30)
+    especie = models.CharField(
+        max_length=20,
+        choices=ESPECIE_OPCIONES,
+          )
+    sexo = models.CharField(
+        max_length=20,
+        choices=SEXO_OPCIONES, 
+    )
+    foto = models.CharField(max_length=9999999)
+    edad = models.PositiveIntegerField()
+    tamanio = models.CharField(
+        max_length=20,
+        choices=TAMANIO_OPCIONES,
+    )
+    vacunas_aplicadas = models.PositiveIntegerField()
+    castracion = models.CharField(
+        max_length=20,
+        choices=CASTRACION_OPCIONES, 
+    )
+    desparasitado = models.CharField(
+        max_length=20,
+        choices=DESPARASITADO_OPCIONES,
+    )
+    discapacidad = models.CharField(max_length=150)
 
-    def __str__(self):
-        return f'{self.user.username}: {self.content}'
+
+# class Publicacion(models.Model):
+  # title = models.CharField(max_length=200, verbose_name="Título")
+  # content = models.TextField(verbose_name="Contenido")
+  # published = models.DateTimeField(verbose_name="Fecha de publicación", default=now)
+  # image = models.ImageField(verbose_name="Imagen", upload_to="blog", null=True, blank=True)
+  # author = models.ForeignKey(User, verbose_name="Autor", on_delete=models.CASCADE)
+  # categories = models.ManyToManyField(Category, verbose_name="Categorías", related_name="get_posts")
+  # created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
+  # updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de edición")    
+
+  #  class Meta:
+      # verbose_name = "entrada"
+      # verbose_name_plural = "entradas"
+      # ordering = ['-created']
+
+  #  def __str__(self):
+      #  return self.title
+
+
+# class Avatar(models.Model):
+    
+   # user = models.ForeignKey(user, on_delete=models.CASCADE)
+   # imagen = models.ImageField(upload_to='avatares', null=True, blank = True)
+

@@ -9,7 +9,7 @@ from django.contrib import messages
 def landing(request):
     return render(request,"pinderApp/index.html") 
 
-def feed(request):
+# def feed(request):
     data = Post.objects.all()
     context = {'data': data}
     return render(request,"pinderApp/feed.html", context) 

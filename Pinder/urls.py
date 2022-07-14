@@ -20,5 +20,10 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
+    path('landing/', include('pinderApp.urls')),
+]
+=======
     path('', include('pinderApp.urls')),
 ]
+>>>>>>> df21111ce2aadb8b1e7afecc516a31cfcd6b8536
