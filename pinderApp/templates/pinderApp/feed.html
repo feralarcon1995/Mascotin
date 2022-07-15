@@ -9,10 +9,23 @@
     <img src="{{ d.imgPosteo.url}}"  class="posteo__img">
     {% endif%}
     <div class="posteo__info">
-        <h2>@{{d.user.username}}</h2>
-       
+         <div class="posteo__info--head">
+            <img src="{{d.user.image}}" alt="{{d.user.username}}">
+            <div class="posteo__info--head-content">
+                <h2>{{d.user.first_name}} {{d.user.last_name}}</h2>
+               <h4>@{{d.user.username}}</h4>   
+            </div> 
+         </div>  
         <time data-time="#"> <i class="bi bi-clock-history"></i> {{d.timestamp|naturaltime}}</time>
         <div class="posteo__info__content">
+            <h3>Nombre:{{d.nombre}}</h3>
+            <ul>
+                <li>Edad: {{d.edad}}</li>
+                <li>Sexo: {{d.sexo}}</li>
+                <li>Castrado: {{d.castracion}}</li>
+                <li>Vacunas: {{d.vacunas}}</li>
+            </ul>
+            <p></p>
             <p>{{d.content}}</p>
         </div>
     </div>

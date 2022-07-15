@@ -1,0 +1,13 @@
+{% extends 'pinderApp/layout.html' %}
+
+{% block content %}
+
+<article class="postear">
+    <form method="post" enctype="multipart/form-data">{% csrf_token %}
+       {{form}}
+        <button type="submit" class="btn--form">Crear Post!</button>
+    </form>
+   
+</article>
+
+{% endblock %}
