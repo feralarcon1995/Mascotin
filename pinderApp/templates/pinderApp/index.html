@@ -20,15 +20,21 @@
     <header>
         <nav class="landing__nav">
             <a href="#" class="landing__nav--brand">Pin<span>der</span></a>
+
+
+            {% if request.user.is_authenticated %}
             <div class="landing__nav--center">
-                <a href="{% url 'Feed' %}">Inicio</a>
-                <a href="{% url 'Feed' %}">Comunidad</a>
-                <a href="#">Adopta</a>
+                <a href="{% url 'feed' %}">Inicio</a>
+                <a href="{% url 'about' %}">Sobre Nosotros</a>
+                <a href="{% url 'logout' %}">Log <span>Out</span></a>
             </div>
+            {% else %}
             <div class="landing__nav--login">
-                <a href="#">Sign <span>Up</span></a>
-                <a href="#">Log <span>In</span></a>
+                <a href="{% url 'about' %}">Sobre Nosotros</a>
+                <a href="{% url 'register'%}">Sign <span>Up</span></a>
+                <a href="{% url 'login' %}">Log <span>In</span></a>
             </div>
+            {% endif %}
         </nav>
     </header>
     <!--main-->
@@ -37,7 +43,7 @@
         <p>Bienvenido a</p>
         <h1 class="landing__title">Pin<span>der</span></h1>
         <p>Encuentra a tu proxima compania al lado de una mascota.</p>
-        <a href="#" class="btn btn-landing">Unirse a la comunidad.</a>
+        <a href="{% url 'feed' %}" class="btn btn-landing">Unirse a la comunidad.</a>
 
     </main>
     <!--footer-->

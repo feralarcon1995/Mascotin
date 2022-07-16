@@ -1,5 +1,36 @@
-{% extends 'pinderApp/layout.html' %}
+{% extends 'pinderApp/feed.html' %}
+{% block title %}Perfil - {{user.username}}{% endblock title %}
 
 {% block content %}
+
+<section class="profile">
+    <article class="profile__header">
+        <img src="{{Usuario.profile.image.url}}" alt="{{user.username}}">
+
+        {% comment %} {% if usuario.profile.image.url %}
+            <img src="{{usuario.profile.image.url}}" alt="{{user.username}}">
+            {% else %} 
+            <img src="../../static/pinderApp/assets/user.png" alt="{{user.username}}">
+            {% endif %} {% endcomment %}
+    
+    <div class="profile__header--content">
+        <h2>{{user.first_name}} {{user.last_name}}</h2>
+        <h4>@{{user.username}}</h4>
+        <h4>{{user.posts.count}} publicaciones</h4>
+        <div class="profile__header--content--folow">
+            <button><a class="follow-button" href="">Follow</a></button>
+			<button><a class="follow-button" href="">Unfollow</a></button>
+        </div>
+    </div>
+    </article>
+
+
+    <article>
+        <h3>Publicaciones</h3>
+    </article>
+
+    
+
+</section>
 
 {% endblock %}
