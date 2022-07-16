@@ -1,11 +1,8 @@
-from email.policy import default
 from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.views.generic.base import TemplateView
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+
 # Create your models here.
 
 ## MODELO DE PERFIL DEL USUARIO
@@ -25,29 +22,29 @@ class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    dni = models.PositiveIntegerField()
+    dni = models.PositiveIntegerField(null=True)
     sexo = models.CharField(
         max_length=30,
         choices=SEXO_USUARIO
     )
-    image = models.ImageField(upload_to='posteos', null=True)
-    edad = models.PositiveIntegerField()
-    telefono = models.PositiveIntegerField()
-    email = models.EmailField()
+    image = models.ImageField(upload_to='profile', null=True)
+    edad = models.PositiveIntegerField(null=True)
+    telefono = models.PositiveIntegerField(null=True)
+    email = models.EmailField(null=True)
     localidad = models.CharField(max_length=50)
     provincia = models.CharField(max_length=30)
     ocupacion = models.CharField(max_length=50)
-    carga_horaria = models.PositiveIntegerField()
-    dias_homeoffice = models.PositiveIntegerField()
-    cantidad_hijos = models.PositiveIntegerField()
-    cantidad_mascotas = models.PositiveIntegerField()
+    carga_horaria = models.PositiveIntegerField(null=True)
+    dias_homeoffice = models.PositiveIntegerField(null=True)
+    cantidad_hijos = models.PositiveIntegerField(null=True)
+    cantidad_mascotas = models.PositiveIntegerField(null=True)
     especie_mascota = models.CharField(max_length=50)
     espacio_abierto = models.CharField(
         max_length=40,
         choices=ESPACIO_USUARIO
     )
     def __str__(self):
-        return f'{self.user.username}: {self.first_name} {self.last_name}'
+        return f'{self.user.username}: {self.first_name} {self.last_name} {self.image}'
 
 ## POSTEO DE ANIMAL
 ESPECIE_OPCIONES = (

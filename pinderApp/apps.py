@@ -6,4 +6,4 @@ class PinderappConfig(AppConfig):
     name = 'pinderApp'
 
     def ready(self):
-        import pinderApp.signals
+        from . import signals

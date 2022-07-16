@@ -24,13 +24,13 @@
 
             {% if request.user.is_authenticated %}
             <div class="landing__nav--center">
-                <a href="{% url 'Feed' %}">Inicio</a>
-                <a href="{% url 'About' %}">Sobre Nosotros</a>
+                <a href="{% url 'feed' %}">Inicio</a>
+                <a href="{% url 'about' %}">Sobre Nosotros</a>
                 <a href="{% url 'logout' %}">Log <span>Out</span></a>
             </div>
             {% else %}
             <div class="landing__nav--login">
-                <a href="{% url 'About' %}">Sobre Nosotros</a>
+                <a href="{% url 'about' %}">Sobre Nosotros</a>
                 <a href="{% url 'register'%}">Sign <span>Up</span></a>
                 <a href="{% url 'login' %}">Log <span>In</span></a>
             </div>
@@ -43,7 +43,7 @@
         <p>Bienvenido a</p>
         <h1 class="landing__title">Pin<span>der</span></h1>
         <p>Encuentra a tu proxima compania al lado de una mascota.</p>
-        <a href="{% url 'Feed' %}" class="btn btn-landing">Unirse a la comunidad.</a>
+        <a href="{% url 'feed' %}" class="btn btn-landing">Unirse a la comunidad.</a>
 
     </main>
     <!--footer-->

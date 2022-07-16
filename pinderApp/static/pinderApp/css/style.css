@@ -31,6 +31,11 @@
     background-color: var(--bg-color);
 }
 
+.bg-main{
+    width: 100%;
+    padding: 30px;
+}
+
 /*LANDING STYLE*/
 
 .landing__bg {
@@ -343,52 +348,94 @@ span {
     border-radius: .3rem;
     margin: 5px;
     width: 100%;
+    padding: 20px;
 }
 
 .posteo__info {
-    padding: 10px 20px;
+    padding: 20px 0px 0px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
 }
 
 .posteo img {
-    width: 60%;
-    height: 600px;
+    width: 40%;
+    height: 500px;
     object-fit: cover;
+    border-radius: .3rem;
 }
 
-.postear{
+.posteo__info--head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    border-bottom: 2px solid var(--bg-color-variant);
+}
+
+.posteo__info--head-r {
+    display: flex;
+    align-items: center;
+    width: 70%;
+}
+
+.posteo__info--head-content{
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+}
+.posteo__info--head-content a{
+    text-decoration: none;
+    color: var(--main-color);
+    font-size: 2rem;
+    font-weight: 500;
+}
+.posteo__info--head img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.posteo__info__content{
+    height: 70%;
+    align-self: flex-start;
+}
+
+.postear {
     background-color: var(--bg-color-variant-second);
     padding: 10px;
     width: 100%;
 }
 
-.postear form{
+.postear form {
     display: flex;
     flex-direction: column;
 }
 
-.postear form label{
+.postear form label {
     font-size: 1.2rem;
     font-weight: 500;
     color: var(--color-white);
     padding: 10px;
 }
 
-.postear form input, .postear form select{
+.postear form input, .postear form select {
     border: 2px solid var(--main-color);
     border-radius: .3rem;
     height: 3rem;
     padding: 10px;
 }
 
-.postear form label:first-child{
-    content:'Subir Imagen' !important;
+.postear form label:first-child {
+    content: 'Subir Imagen' !important;
     color: red;
 }
 
-#id_imgPosteo{
+#id_imgPosteo {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -396,12 +443,25 @@ span {
     width: 100%;
 }
 
-.postear form textarea{
+.postear form textarea {
     border: 2px solid var(--main-color);
     border-radius: .3rem;
     height: 5rem;
     padding: 10px;
 }
+
+
+.btn-feed{
+    background-color: var(--bg-color-variant-second);
+    color: var(--color-white);
+    outline: none;
+}
+
+.btn-feed:hover{
+    border: none;
+    outline: none;
+}
+
 /*FIN PÓSTEO*/
 
 /*REGISTRO*/
@@ -488,4 +548,26 @@ span {
 
 .helptext {
     display: none;
+}
+
+
+/*PROFILE*/
+
+.profile__header {
+    display: flex;
+    background: var(--bg-color-variant);
+    width: 100%;
+}
+
+.profile__header img {
+    width: 30%;
+    height: 400px;
+    object-fit: cover;
+}
+
+
+.profile__header--content {
+    padding: 20px;
+    color: var(--color-light);
+    font-weight: 500;
 }
