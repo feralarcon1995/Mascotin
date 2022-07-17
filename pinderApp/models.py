@@ -1,4 +1,3 @@
-from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -20,7 +19,7 @@ ESPACIO_USUARIO = (
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='profile_pics')
+    image = models.ImageField(upload_to='profile_pics', default='../media/user.png')
     dni = models.PositiveIntegerField(null=True)
     sexo = models.CharField(
         max_length=30,

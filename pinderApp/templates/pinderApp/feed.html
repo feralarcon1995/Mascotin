@@ -5,7 +5,11 @@
 
      <section class="crear__post">
         <article class="crear__post-user">
+            {% if user.profile.image.url %}
             <img src="{{user.profile.image.url}}" alt="{{user.username}}">
+            {%else%}
+            <img src="../../static/pinderApp/assets/user.png" alt="{{user.username}}">
+            {% endif %}
             <a href="{% url 'profile' user.username %}">Hola, @{{user.username}}</a>   
         </article>
         <a href="{% url 'post'%}">Publicar mascota</a>
