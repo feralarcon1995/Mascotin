@@ -10,6 +10,7 @@ urlpatterns = [
     path('feed', views.feed, name="feed"),
     path('profile/', views.profile, name='profile'),
 	path('profile/<str:username>', views.profile, name='profile'),
+    path("edit", views.editProfile, name="update_profile"),
     path("post", views.post, name="post"),
     path('register', views.register, name="register"),
     path('login',LoginView.as_view(template_name="pinderApp/login.html"), name="login"),

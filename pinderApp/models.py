@@ -1,4 +1,4 @@
-from django.db import models
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -18,19 +18,16 @@ ESPACIO_USUARIO = (
     ("3", "No poseo"),
 )
 
-class Usuario(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+    image = models.ImageField(upload_to='profile_pics')
     dni = models.PositiveIntegerField(null=True)
     sexo = models.CharField(
         max_length=30,
         choices=SEXO_USUARIO
     )
-    image = models.ImageField(upload_to='profile', null=True)
     edad = models.PositiveIntegerField(null=True)
     telefono = models.PositiveIntegerField(null=True)
-    email = models.EmailField(null=True)
     localidad = models.CharField(max_length=50)
     provincia = models.CharField(max_length=30)
     ocupacion = models.CharField(max_length=50)
@@ -44,7 +41,9 @@ class Usuario(models.Model):
         choices=ESPACIO_USUARIO
     )
     def __str__(self):
-        return f'{self.user.username}: {self.first_name} {self.last_name} {self.image}'
+        return f'{self.user.username} Profile'
+
+ 
 
 ## POSTEO DE ANIMAL
 ESPECIE_OPCIONES = (
@@ -73,9 +72,8 @@ DESPARASITADO_OPCIONES = (
     ("2", "No"),
 )
 
-#POST
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts') 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posteos') 
     timestamp = models.DateTimeField(default=timezone.now)
     nombre = models.CharField(max_length=30, blank=True,null=True)
     especie = models.CharField(
@@ -119,8 +117,4 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.user.username}: {self.content}'
 
-    
-# class Avatar(models.Model):
-    
-   # user = models.ForeignKey(user, on_delete=models.CASCADE)
-   # imagen = models.ImageField(upload_to='avatares', null=True, blank = True)
+

@@ -3,5 +3,5 @@ from .models import *
 
 # Register your models here.
 # admin.site.register(Profile)
-admin.site.register(Usuario)
+admin.site.register(Profile)
 admin.site.register(Post)

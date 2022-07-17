@@ -12,7 +12,7 @@
     <div class="posteo__info">
          <div class="posteo__info--head">
             <div class="posteo__info--head-r">
-                {% if d.user.profile.image.url %}
+            {% if d.user.profile.image.url %}
             <img src="{{ d.user.profile.image.url}}" alt="{{d.user.username}}">
             {% else %} 
             <img src="../../static/pinderApp/assets/user.png" alt="{{d.user.username}}">
@@ -20,7 +20,7 @@
             <div class="posteo__info--head-content">
                 <h2>{{d.user.first_name}} {{d.user.last_name}}</h2>
                <a href="{% url 'profile' d.user.username %}">@{{d.user.username}}</a>   
-               <time data-time="#"> <i class="bi bi-clock-history"></i> {{d.timestamp|naturaltime}}</time>
+               <time data-time="#"> <i class="bi bi-clock-history"> Publicado:  </i> {{d.timestamp|naturaltime}}</time>
             </div> 
             </div>
             <div class="btn-group">
@@ -34,15 +34,16 @@
               </div>
          </div>  
         <div class="posteo__info__content">
-            <h3>Nombre:{{d.nombre}}</h3>
+            <h5>Nombre de mascota: {{d.nombre}}</h5>
             <ul>
+                <li>Informacion de la mascota:</li>
+                <li>{{d.get_especie_display}}</li>
                 <li>Edad: {{d.edad}}</li>
-                <li>Sexo: {{d.sexo}}</li>
-                <li>Castrado: {{d.castracion}}</li>
-                <li>Vacunas: {{d.vacunas}}</li>
             </ul>
-            <p></p>
             <p>{{d.content}}</p>
+        </div>
+        <div class="posteo__feed-btn">
+            <a href="">Ver Posteo</a>
         </div>
     </div>
 </article>

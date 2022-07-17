@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
@@ -19,16 +20,12 @@ def about(request):
 
 @login_required
 def feed(request):
-    if request.user.is_authenticated:
         data = Post.objects.all()
         context = {'data': data}
         return render(request, "pinderApp/feed.html", context)
-    else:
-        return render(request, "pinderApp/index.html")
 
 @login_required
 def post(request):
-  if request.user.is_authenticated:
     current_user = get_object_or_404(User, pk=request.user.pk)
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -36,28 +33,63 @@ def post(request):
             post = form.save(commit=False)
             post.user = current_user
             post.save()
-            messages.success(request, 'Post enviado con exito.')
+            messages.success(request, 'Post creado con exito.')
             return redirect('feed')
     else:
         form = PostForm()
     return render(request, "pinderApp/post.html", {'form': form})
-  else:
-    return redirect('login')
-    
 
+    
 @login_required
 def profile(request, username=None):
-    if request.user.is_authenticated:
-     current_user = request.user
-     if username and username != current_user.username:
-         user = User.objects.get(username=username)
-         posts = user.posts.all()
-     else:
-         posts = current_user.posts.all()
-         user = current_user
-     return render(request, "pinderApp/profile.html", {'user': user, 'posts': posts})
+    current_user = request.user
+    if username and username != current_user.username:
+     user = User.objects.get(username=username)
+     posteos = user.posteos.all()
     else:
-     return redirect('login')
+     posteos = current_user.posteos.all()
+     user = current_user
+    return render(request, 'pinderApp/profile.html', {'user':user, 'posteos':posteos})
+
+@login_required
+def editProfile(request):
+    user = request.user.id
+    profile = Profile.objects.get(user__id=user)
+    user__basic__info = User.objects.get(id=user)
+
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES , instance=profile)
+        if form.is_valid():
+          user__basic__info.first_name= form.cleaned_data.get('first_name')
+          user__basic__info.last_name= form.cleaned_data.get('last_name') 
+          user__basic__info.username= form.cleaned_data.get('username') 
+          user__basic__info.email= form.cleaned_data.get('email') 
+          
+          profile.image = form.cleaned_data.get('image')
+          profile.dni = form.cleaned_data.get('dni')
+          profile.sexo = form.cleaned_data.get('sexo')
+          profile.edad = form.cleaned_data.get('edad')
+          profile.telefono = form.cleaned_data.get('telefono')
+          profile.localidad = form.cleaned_data.get('localidad')
+          profile.provincia = form.cleaned_data.get('provincia')
+          profile.ocupacion = form.cleaned_data.get('ocupacion')
+          profile.carga_horaria = form.cleaned_data.get('carga_horaria')
+          profile.dias_homeoffice = form.cleaned_data.get('dias_homeoffice')
+          profile.cantidad_hijos = form.cleaned_data.get('cantidad_hijos')
+          profile.espacio_abierto = form.cleaned_data.get('espacio_abierto')
+
+          profile.save()
+          user__basic__info.save()
+          messages.success(request, f'Perfil actualizado con exito.')
+          return redirect('profile', username=request.user.username)
+    else:
+        form = ProfileUpdateForm(instance=profile)
+    
+    context={
+      'form':form,
+    } 
+    return render(request, "pinderApp/profile_form.html", context)
+
 
 def register(request):
     if request.user.is_authenticated:
@@ -79,3 +111,24 @@ def register(request):
           return render(request, "pinderApp/register.html", context)    
 
     
+
+
+# if request.method == 'PÓST':
+#         u_form= UserUpdateForm(request.POST, instance=request.user)
+#         p_form = ProfileUpdateForm(request.POST, 
+#                                    request.FILES, 
+#                                    instance=request.user.profile)
+#         if u_form.is_valid() and p_form.is_valid():
+#             u_form.save()
+#             p_form.save()    
+#             messages.success(request, f'Perfil actualizado con exito.')
+#             return redirect('profile')
+                       
+#     else:
+#         u_form= UserUpdateForm(instance=request.user)
+#         p_form = ProfileUpdateForm(instance=request.user.profile)
+
+#     context = {
+#         'u_form': u_form,
+#         'p_form': p_form,     
+#         }

@@ -2,6 +2,54 @@
 
 {% block content %}
 
+<section>
+    <article class="profile__header">
+        {% if user.profile.image.url %}
+        <img src="{{ user.profile.image.url}}" alt="{{user.username}}">
+        {% else %} 
+        <img src="../../static/pinderApp/assets/user.png" alt="{{user.username}}">
+        {% endif %}
+
+        <div class="profile__header--content">
+            <h2>{{user.first_name}} {{user.last_name}}</h2>
+            <h4>@{{user.username}}</h4>
+    
+            <div class="accordion-item m-2">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Mas informacion
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    <p><i class="bi bi-geo-alt-fill"></i> {{user.profile.localidad}}, {{user.profile.provincia}}</p>
+                    <p><i class="bi bi-envelope-fill"></i> {{user.email}}</p>
+                    <p><i class="bi bi-phone-fill"></i> {{user.profile.telefono}}</p>
+                    <p><i class="bi bi-calendar2-week-fill"></i> {{user.profile.edad}} años</p>   
+                </div>
+                </div>
+              </div>
+         
+        
+            <h4>{{user.posts.count}} publicaciones</h4>
+            <div class="profile__header--content--folow">
+                <button><a class="follow-button" href="">Follow</a></button>
+                <button><a class="follow-button" href="">Unfollow</a></button>
+            </div>
+        </div>
+    </article>
+
+    <article class="postear">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+
+
+        <button type="submit" class="btn--form">Actualizar</button>
+    </form>
+    </article>
+            
+</section>
 
 
 {% endblock %}
