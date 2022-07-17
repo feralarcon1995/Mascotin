@@ -17,11 +17,20 @@
 
 <body class="bg-app ">
     <nav class="landing__nav">
-        <a href="{% url 'Inicio'%}" class="landing__nav--brand">Pin<span>der</span></a>
+        <a href="{% url 'feed' %}" class="landing__nav--brand"><img src="{% static 'pinderApp/assets/logo.png' %}" alt="logo"></a>
+        {% if request.user.is_authenticated %}
+        <div class="landing__nav--center">
+            <a href="{% url 'feed' %}">Inicio</a>
+            <a href="{% url 'about' %}">Sobre Nosotros</a>
+            <a href="{% url 'logout' %}">Log <span>Out</span></a>
+        </div>
+        {% else %}
         <div class="landing__nav--login">
+            <a href="{% url 'about' %}">Sobre Nosotros</a>
             <a href="{% url 'register'%}">Sign <span>Up</span></a>
             <a href="{% url 'login' %}">Log <span>In</span></a>
         </div>
+        {% endif %}
     </nav>
     <main>
         <section class="about">

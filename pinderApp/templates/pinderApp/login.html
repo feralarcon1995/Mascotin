@@ -22,8 +22,8 @@
 
             <h1>Iniciar <span>sesion</span></h1>
       <p class="formulario__head">¿No tienes cuenta? <a href="{% url 'register' %}" >Registrarse</a></p>
-            <form class="formulario__content container" method="post">{% csrf_token %}
-
+            <form class="formulario__content container" method="post">
+                {% csrf_token %}
                 {{form}}
             
                 <button type="submit" id="submit" class="btn--form btn-landing">Iniciar sesion</button>

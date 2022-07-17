@@ -1,5 +1,87 @@
-{% extends 'pinderApp/layout.html' %}
-
+{% extends 'pinderApp/feed.html' %}
+{% block title %}Perfil - {{user.username}}{% endblock title %}
+{% load humanize %}
 {% block content %}
+
+<section class="profile">
+    <article class="profile__header">
+        {% if user.profile.image.url %}
+            <img src="{{ user.profile.image.url}}" alt="{{user.username}}">
+            {% else %} 
+            <img src="../../static/pinderApp/assets/user.png" alt="{{user.username}}">
+            {% endif %}
+    <div class="profile__header--content">
+        <h2>{{user.first_name}} {{user.last_name}}</h2>
+        <h4>@{{user.username}}</h4>
+        <div class="accordion-item m-2">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Mas informacion
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <p><i class="bi bi-geo-alt-fill"></i> {{user.profile.localidad}}, {{user.profile.provincia}}</p>
+                <p><i class="bi bi-envelope-fill"></i> {{user.email}}</p>
+                <p><i class="bi bi-phone-fill"></i> {{user.profile.telefono}}</p>
+                <p><i class="bi bi-calendar2-week-fill"></i> {{user.profile.edad}} años</p>   
+            </div>
+            </div>
+          </div>
+     
+    
+        <div class="profile__header--content--folow">
+            <button><a class="follow-button" href="">Follow</a></button>
+			      <button><a class="follow-button" href="">Unfollow</a></button>
+        </div>
+    </div>
+    <a href="{% url 'update_profile' %}">Editar Perfil</a>
+    </article>
+
+<article class="user-posteos">
+  <h3>{{user.posteos.count}} Publicaciones</h3>
+</article>
+<article class="profile-posteo">
+
+{% if posteos %}
+{% for d in posteos %}
+
+      <div class="profile-posteo__content">
+           <div class="profile-posteo__info">
+             <img src="{{ d.imgPosteo.url}}"  class="posteo__img">
+              <div class="profile-posteo__info--head">
+                       <img src="{{ d.user.profile.image.url}}" alt="{{d.user.username}}">
+                   <div class="profile-posteo__info--head-content">
+                       <h2>{{d.user.first_name}} {{d.user.last_name}}</h2>
+                       <a href="{% url 'profile' d.user.username %}">@{{d.user.username}}</a>   
+                       <time data-time="#"> <i class="bi bi-clock-history"> Publicado:  </i> {{d.timestamp |naturaltime}}</time>
+                   </div> 
+                   <div class="btn-group">
+                    <button class="btn btn-feed dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <li><a class="dropdown-item" href="#">Eliminar</a></li>
+                      <li><a class="dropdown-item" href="#">Editar</a></li>
+                    </ul>
+              </div>
+                </div>
+
+                
+              </div>
+
+              <div class="profile-posteo__info__content">
+                  <h5>Nombre de mascota: {{d.nombre}}</h5>
+              </div>
+              <div class="posteo__feed-btn">
+                  <a href="">Ver Posteo</a>
+              </div>
+           </div>
+      </div>
+{% endfor %}
+{% endif %}
+</article>
+    
+</section>
 
 {% endblock %}

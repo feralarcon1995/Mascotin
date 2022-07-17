@@ -1,7 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Post
+from django.contrib.auth.forms import UserCreationForm
+from .models import *
 
 
 class UserRegisterForm(UserCreationForm):
@@ -24,8 +24,41 @@ class PostForm(forms.ModelForm):
         fields = ['nombre','especie','imgPosteo','sexo','edad','tamanio','vacunas_aplicadas','castracion','desparasitado','discapacidad','content']
   
            
+class UserUpdateForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=100, label="Ingrese su nombre")
+    last_name = forms.CharField(max_length=100, label="Ingrese su apellido")
+    username = forms.CharField(max_length=50, label="Ingrese su nombre de usuario")
+    email = forms.EmailField(label="Ingrese su email",widget=forms.EmailInput)
+    class Meta:
+        model = User
+        fields = ['username',
+                  'first_name',
+                  'last_name',
+                  'email',]
 
-        
-        
-# 
 
+class ProfileUpdateForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=100, label="Ingrese su nombre")
+    last_name = forms.CharField(max_length=100, label="Ingrese su apellido")
+    username = forms.CharField(max_length=50, label="Ingrese su nombre de usuario")
+    email = forms.EmailField(label="Ingrese su email",widget=forms.EmailInput)
+    class Meta:
+        model = Profile
+        fields = ('first_name',
+                  'last_name',
+                  'username',
+                  'email',
+                  'image',
+                  'dni',
+                  'sexo',
+                  'edad',
+                  'telefono',
+                  'localidad',
+                  'provincia' ,
+                  'ocupacion',
+                  'carga_horaria',
+                  'dias_homeoffice',
+                  'cantidad_hijos',
+                  'cantidad_mascotas',
+                  'especie_mascota',
+                  'espacio_abierto',)

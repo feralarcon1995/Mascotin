@@ -31,6 +31,11 @@
     background-color: var(--bg-color);
 }
 
+.bg-main {
+    width: 100%;
+    padding: 30px;
+}
+
 /*LANDING STYLE*/
 
 .landing__bg {
@@ -55,15 +60,16 @@
 }
 
 .landing__nav--brand {
-    color: var(--color-white);
-    font-size: 3rem;
-    text-decoration: none;
-    font-weight: 500;
     background-image: linear-gradient(var(--main-color), var(--main-color));
     background-position: 50% 100%;
     background-repeat: no-repeat;
     background-size: 0% 3px;
     transition: var(--transition);
+}
+
+.landing__nav--brand img {
+    width: 100%;
+    height: 70px;
 }
 
 span {
@@ -120,7 +126,8 @@ span {
 
 .landing__main h1 {
     color: var(--color-white);
-    font-size: 7rem;
+    font-size: 2rem;
+    margin: 0;
 }
 
 .btn-landing {
@@ -186,11 +193,17 @@ span {
 }
 
 .app__brand {
-    color: var(--color-white);
-    font-size: 2rem;
-    text-decoration: none;
-    font-weight: 500;
     width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.app__brand img {
+    width: 40%;
+    height: 40px;
+    object-fit: cover;
 }
 
 .app__nav__list {
@@ -316,12 +329,12 @@ span {
 /*POSTEO*/
 .crear__post {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: flex-end;
     background-color: var(--bg-color-variant);
     width: 100%;
     padding: 10px;
-    border-radius: 2rem;
+    border-radius: .3rem;
     margin: 10px 0;
     box-shadow: 3px 3px 5px 0px rgba(65, 65, 65, 0.75);
 }
@@ -331,9 +344,62 @@ span {
     text-align: center;
     color: var(--bg-color-variant);
     background-color: var(--main-color);
-    width: 200px;
-    border-radius: 2rem;
+    width: 250px;
+    border-radius: 0.3rem;
     align-self: center;
+    font-weight: 500;
+    font-size: 1.5rem;
+    padding: 5px;
+}
+.crear__post-user{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.crear__post-user img{
+    width: 50px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: .3rem;
+}
+.filtro{
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+.perro {
+    background: var(--gradient), url(../assets/feed.jpg);
+}
+.gato{
+    background: var(--gradient), url(../assets/fav.jpg);
+}
+
+.gato, .perro {
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(255, 255, 255);
+    height: 300px;
+    width: 50%;
+    border-radius: .3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+}
+.perro a, .gato a{
+    background-color: var(--main-color);
+    color: var(--bg-color);
+    text-decoration: none;
+    width: 200px;
+    height: 50px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    padding: 4px;
+    text-align: center;
+    margin: 10px;
+    border-radius: .3rem;
 }
 
 .posteo {
@@ -341,54 +407,107 @@ span {
     background-color: var(--bg-color-variant-second);
     color: var(--color-white);
     border-radius: .3rem;
-    margin: 5px;
+    margin: 15px 0;
     width: 100%;
+    padding: 20px;
 }
 
 .posteo__info {
-    padding: 10px 20px;
+    padding: 20px 0px 0px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    width: 60%;
 }
 
 .posteo img {
-    width: 60%;
-    height: 600px;
+    width: 40%;
+    height: 500px;
     object-fit: cover;
+    border-radius: .3rem;
 }
 
-.postear{
+.posteo__info--head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    border-bottom: 2px solid var(--bg-color-variant);
+}
+
+.posteo__info--head-r {
+    display: flex;
+    align-items: center;
+    width: 70%;
+}
+
+.posteo__info--head-content {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.posteo__info--head-content h2 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.posteo__info--head-content a {
+    text-decoration: none;
+    color: var(--main-color);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.posteo__info--head img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.posteo__info__content {
+    height: 70%;
+    align-self: flex-start;
+    padding: 20px 0px;
+    border-bottom: 2px solid var(--bg-color-variant);
+    width: 100%;
+}
+
+.postear {
     background-color: var(--bg-color-variant-second);
     padding: 10px;
     width: 100%;
 }
 
-.postear form{
+.postear form {
     display: flex;
     flex-direction: column;
 }
 
-.postear form label{
+.postear form label {
     font-size: 1.2rem;
     font-weight: 500;
     color: var(--color-white);
     padding: 10px;
 }
 
-.postear form input, .postear form select{
+.postear form input, .postear form select {
     border: 2px solid var(--main-color);
     border-radius: .3rem;
     height: 3rem;
     padding: 10px;
 }
 
-.postear form label:first-child{
-    content:'Subir Imagen' !important;
+.postear form label:first-child {
+    content: 'Subir Imagen' !important;
     color: red;
 }
 
-#id_imgPosteo{
+#id_imgPosteo {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -396,12 +515,43 @@ span {
     width: 100%;
 }
 
-.postear form textarea{
+.postear form textarea {
     border: 2px solid var(--main-color);
     border-radius: .3rem;
     height: 5rem;
     padding: 10px;
 }
+
+
+.btn-feed {
+    background-color: var(--bg-color-variant-second);
+    color: var(--color-white);
+    outline: none;
+}
+
+.btn-feed:hover {
+    border: none;
+    outline: none;
+}
+
+.posteo__feed-btn {
+    background-color: var(--main-color);
+    width: 130px;
+    height: 40px;
+    align-self: flex-end;
+    border-radius: .3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.posteo__feed-btn a {
+    text-decoration: none;
+    color: var(--bg-color-variant);
+    font-weight: 500;
+}
+
 /*FIN PÓSTEO*/
 
 /*REGISTRO*/
@@ -488,4 +638,134 @@ span {
 
 .helptext {
     display: none;
+}
+
+
+/*PROFILE*/
+
+.user-posteos {
+    background-color: var(--bg-color-variant-second);
+    margin: 10px 0;
+    text-align: center;
+    color: var(--color-white);
+    border-radius: .3rem;
+    padding: 10px 0px;
+}
+
+.profile__header {
+    display: flex;
+    background: var(--bg-color-variant);
+    width: 100%;
+    padding: 30px;
+    border-radius: .3rem;
+}
+
+.profile__header a {
+    background-color: var(--main-color);
+    border-radius: .3rem;
+    font-weight: 500;
+    width: 100px;
+    height: 30px;
+    color: var(--bg-color-variant);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile__header img {
+    width: 30%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: .3rem;
+}
+
+
+.profile__header--content {
+    padding: 20px;
+    color: var(--color-light);
+    font-weight: 500;
+    width: 65%;
+}
+
+
+.profile-posteo {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 10px 0;
+    background-color: var(--bg-color-variant-second);
+    width: 100%;
+    padding: 10px;
+    gap: 20px;
+    border-radius: .3rem;
+}
+
+
+.profile-posteo__content {
+    background-color: var(--bg-color-variant);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32%;
+    padding: 10px;
+    border-radius: .3rem;
+    box-shadow: 3px 3px 4px 0px var(--bg-color);
+}
+
+.profile-posteo__content img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: .3rem;
+}
+
+.profile-posteo__info--head {
+    display: flex;
+    align-items: center;
+    color: var(--color-white);
+    padding: 10px;
+    border-bottom: 1px solid var(--color-white);
+
+}
+
+.profile-posteo__info--head img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-posteo__info--head-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5px 10px;
+    width: 70%;
+}
+
+.profile-posteo__info--head-content a {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+.profile-posteo__content h2 {
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.profile-posteo__info__content h5 {
+    color: var(--color-light);
+    padding: 10px 0px;
+    border-bottom: 1px solid var(--color-white);
+
+}
+
+
+/*footer-app*/
+
+.footer-app {
+    color: var(--bg-color-variant-second);
+    padding: 10px;
 }

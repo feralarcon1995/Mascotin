@@ -1,0 +1,52 @@
+{% extends 'pinderApp/layout.html' %}
+{% block title %}Feed{% endblock title %}
+{% load humanize %}
+{% block content %}
+
+<article class="posteo">
+    {% if obcjet.imgPosteo %}
+    <img src="{{ obcjet.imgPosteo.url}}"  class="posteo__img">
+    {% endif%}
+    <div class="posteo__info">
+         <div class="posteo__info--head">
+            <div class="posteo__info--head-r">
+            {% if obcjet.user.profile.image.url %}
+            <img src="{{ obcjet.user.profile.image.url}}" alt="{{obcjet.user.username}}">
+            {% else %} 
+            <img src="../../static/pinderApp/assets/user.png" alt="{{obcjet.user.username}}">
+            {% endif %}
+            <div class="posteo__info--head-content">
+                <h2>{{obcjet.user.first_name}} {{obcjet.user.last_name}}</h2>
+               <a href="{% url 'profile' obcjet.user.username %}">@{{obcjet.user.username}}</a>   
+               <time data-time="#"> <i class="bi bi-clock-history"> Publicado:  </i> {{obcjet.timestamp|naturaltime}}</time>
+            </div> 
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-feed dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><a class="dropdown-item" href="#">Eliminar</a></li>
+                  <li><a class="dropdown-item" href="#">Editar</a></li>
+                </ul>
+              </div>
+         </div>  
+        <div class="posteo__info__content">
+            <h5>Nombre de mascota: {{obcjet.nombre}}</h5>
+            <ul>
+                <li>Informacion de la mascota:</li>
+                <li>{{obcjet.get_especie_display}}</li>
+                <li>Edad: {{obcjet.edad}}</li>
+            </ul>
+            <p>{{obcjet.content}}</p>
+        </div>
+        <div class="posteo__feed-btn">
+            <a href="">Ver Posteo</a>
+        </div>
+    </div>
+</article>
+ 
+
+{% endfor %}
+
+{% endblock %}
