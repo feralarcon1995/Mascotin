@@ -1,28 +1,28 @@
-{% extends 'pinderApp/layout.html' %}
-{% block title %}Feed{% endblock title %}
+{% extends 'pinderApp/feed.html' %}
+{% block title %}Perros{% endblock title %}
 {% load humanize %}
+
+<section class="crear__post">
+    <article class="crear__post-user">
+        <img src="{{user.profile.image.url}}" alt="{{user.username}}">
+        <a href="{% url 'profile' user.username %}">Hola, @{{user.username}}</a>   
+    </article>
+    <a href="{% url 'post'%}">Publicar mascota</a>
+</section>
+
+<section class="filtro">
+    <article class="perro">
+        <a href="{% url 'perros' %}"> Buscar Perros</a>
+</article>
+<article class="gato">
+    <a href="{% url 'gatos' %}">
+        Buscar Gatos
+    </a>
+</article>
+</section>
 {% block content %}
 
-     <section class="crear__post">
-        <article class="crear__post-user">
-            <img src="{{user.profile.image.url}}" alt="{{user.username}}">
-            <a href="{% url 'profile' user.username %}">Hola, @{{user.username}}</a>   
-        </article>
-        <a href="{% url 'post'%}">Publicar mascota</a>
-    </section>
-    
-    <section class="filtro">
-        <article class="perro">
-            <a href="{% url 'perros' %}"> Buscar Perros</a>
-    </article>
-    <article class="gato">
-        <a href="{% url 'gatos' %}">
-            Buscar Gatos
-        </a>
-    </article>
-    </section>
-
-{% for d in data %}
+{% for d in dog %}
 
 <article class="posteo">
     {% if d.imgPosteo %}
@@ -68,5 +68,7 @@
 </article>
 
 {% endfor %}
+
+
 
 {% endblock %}

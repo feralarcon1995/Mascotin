@@ -17,7 +17,7 @@
 
 <body class="bg-app ">
     <nav class="landing__nav">
-        <a href="{% url 'inicio'%}" class="landing__nav--brand">Pin<span>der</span></a>
+        <a href="{% url 'feed' %}" class="landing__nav--brand"><img src="{% static 'pinderApp/assets/logo.png' %}" alt="logo"></a>
         {% if request.user.is_authenticated %}
         <div class="landing__nav--center">
             <a href="{% url 'feed' %}">Inicio</a>

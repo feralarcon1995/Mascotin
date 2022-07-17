@@ -1,4 +1,5 @@
 from multiprocessing import context
+from pyexpat import model
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
@@ -39,7 +40,10 @@ def post(request):
         form = PostForm()
     return render(request, "pinderApp/post.html", {'form': form})
 
-    
+@login_required
+def postDetail(request):
+    model= Post
+
 @login_required
 def profile(request, username=None):
     current_user = request.user
@@ -81,7 +85,7 @@ def editProfile(request):
           profile.save()
           user__basic__info.save()
           messages.success(request, f'Perfil actualizado con exito.')
-          return redirect('profile', username=request.user.username)
+          return redirect('profile')
     else:
         form = ProfileUpdateForm(instance=profile)
     
@@ -90,6 +94,17 @@ def editProfile(request):
     } 
     return render(request, "pinderApp/profile_form.html", context)
 
+@login_required
+def gatos(request):
+    cat = Post.objects.filter(especie='2')
+    context = {'cat':cat}
+    return render(request, 'pinderApp/gatos.html',context)
+
+@login_required
+def perros(request):
+    dog = Post.objects.filter(especie='1')
+    context = { 'dog':dog}
+    return render(request, 'pinderApp/perros.html',context)    
 
 def register(request):
     if request.user.is_authenticated:
@@ -112,23 +127,3 @@ def register(request):
 
     
 
-
-# if request.method == 'PÓST':
-#         u_form= UserUpdateForm(request.POST, instance=request.user)
-#         p_form = ProfileUpdateForm(request.POST, 
-#                                    request.FILES, 
-#                                    instance=request.user.profile)
-#         if u_form.is_valid() and p_form.is_valid():
-#             u_form.save()
-#             p_form.save()    
-#             messages.success(request, f'Perfil actualizado con exito.')
-#             return redirect('profile')
-                       
-#     else:
-#         u_form= UserUpdateForm(instance=request.user)
-#         p_form = ProfileUpdateForm(instance=request.user.profile)
-
-#     context = {
-#         'u_form': u_form,
-#         'p_form': p_form,     
-#         }
