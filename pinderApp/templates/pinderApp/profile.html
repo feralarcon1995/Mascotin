@@ -35,7 +35,9 @@
 			      <button><a class="follow-button" href="">Unfollow</a></button>
         </div>
     </div>
-    <a href="{% url 'update_profile' %}">Editar Perfil</a>
+
+             <a href="{% url 'update_profile' %}">Editar Perfil</a>
+
     </article>
 
 <article class="user-posteos">
@@ -48,23 +50,25 @@
 
       <div class="profile-posteo__content">
            <div class="profile-posteo__info">
-             <img src="{{ d.imgPosteo.url}}"  class="posteo__img">
+             <img src="{{ d.image.url}}"  class="posteo__img">
               <div class="profile-posteo__info--head">
-                       <img src="{{ d.user.profile.image.url}}" alt="{{d.user.username}}">
+                       <img src="{{ d.author.profile.image.url}}" alt="{{d.author.username}}">
                    <div class="profile-posteo__info--head-content">
-                       <h2>{{d.user.first_name}} {{d.user.last_name}}</h2>
-                       <a href="{% url 'profile' d.user.username %}">@{{d.user.username}}</a>   
+                       <h2>{{d.author.first_name}} {{d.author.last_name}}</h2>
+                       <a href="{% url 'profile' d.author.username %}">@{{d.author.username}}</a>   
                        <time data-time="#"> <i class="bi bi-clock-history"> Publicado:  </i> {{d.timestamp |naturaltime}}</time>
                    </div> 
+                   {% if request.user == d.author %}
                    <div class="btn-group">
                     <button class="btn btn-feed dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <li><a class="dropdown-item" href="#">Eliminar</a></li>
-                      <li><a class="dropdown-item" href="#">Editar</a></li>
+                      <li><a class="dropdown-item" href="{% url 'post_edit' d.pk %}">Editar</a></li>
+                      <li><a class="dropdown-item" href="{% url 'post_delete' d.pk %}">Eliminar</a></li>
                     </ul>
-              </div>
+                  </div>
+                  {% endif %}
                 </div>
 
                 
@@ -74,7 +78,7 @@
                   <h5>Nombre de mascota: {{d.nombre}}</h5>
               </div>
               <div class="posteo__feed-btn">
-                  <a href="">Ver Posteo</a>
+                <a href="{% url 'post_detail' d.pk %}">Ver Posteo</a>
               </div>
            </div>
       </div>

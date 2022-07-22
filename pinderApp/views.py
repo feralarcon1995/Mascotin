@@ -1,11 +1,15 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+from django.urls import is_valid_path, reverse_lazy
+from django.views import View
 from .models import *
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.views.generic.edit import UpdateView,DeleteView
 
 # Create your views here.
 
@@ -30,7 +34,7 @@ def post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = current_user
+            post.author = current_user
             post.save()
             messages.success(request, 'Post creado con exito.')
             return redirect('feed')
@@ -38,9 +42,6 @@ def post(request):
         form = PostForm()
     return render(request, "pinderApp/post.html", {'form': form})
 
-@login_required
-def postDetail(request):
-    model= Post
 
 @login_required
 def profile(request, username=None):
@@ -123,5 +124,113 @@ def register(request):
           context = {'form': form}
           return render(request, "pinderApp/register.html", context)    
 
+
+class PostDetailView(View,LoginRequiredMixin):
+    def get(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        form = PostCommentForm()
+
+        comments = PostComment.objects.filter(post=post).order_by('-timestamp')
+
+        context = {
+            'post': post,
+            'form': form,
+            'comments':comments
+        }
+ 
+        return render(request,'pinderApp/post_detail.html', context)
+
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        form = PostCommentForm(request.POST)
+
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.author = request.user
+            new_comment.post = post
+            new_comment.save()
+
+        comments = PostComment.objects.filter(post=post).order_by('-timestamp')
+    
+        context ={
+           'post':post,
+           'form':form,
+           'comments':comments,
+        }   
+        return render(request,'pinderApp/post_detail.html',context)
     
 
+class PostEditView(UpdateView ,LoginRequiredMixin,UserPassesTestMixin):
+    model=Post
+    fields='__all__'
+    template_name= 'pinderApp/post_edit.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('post_detail', kwargs={'pk':pk})
+
+    def test_func(self):
+        post = self.ger_object()
+        return self.request.user == post.author  
+
+
+class PostDeleteView(DeleteView ,LoginRequiredMixin,UserPassesTestMixin):
+    model=Post
+    fields='__all__'
+    template_name= 'pinderApp/post_delete.html'
+    success_url = reverse_lazy('feed')
+
+    def test_func(self):
+        post = self.ger_object()
+        return self.request.user == post.author  
+
+class AddLike(LoginRequiredMixin,View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+
+        is_like = False
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            post.likes.add(request.user)
+
+        if is_like:
+            post.likes.remove(request.user)    
+
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)    
+
+
+
+
+class AddDislike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+
+        is_like = False
+
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            post.likes.remove(request.user)
+
+        is_dislike = False
+        for dislike in post.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            post.dislikes.add(request.user)
+
+        if is_dislike:
+            post.dislikes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)

@@ -481,11 +481,14 @@ span {
     background-color: var(--bg-color-variant-second);
     padding: 10px;
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .postear form {
     display: flex;
     flex-direction: column;
+    width: 80%;
 }
 
 .postear form label {
@@ -494,7 +497,9 @@ span {
     color: var(--color-white);
     padding: 10px;
 }
-
+input > span {
+    color: var(--color-light);
+}
 .postear form input, .postear form select {
     border: 2px solid var(--main-color);
     border-radius: .3rem;
@@ -552,6 +557,170 @@ span {
     font-weight: 500;
 }
 
+/*detail*/
+.posteo__info-detail{
+    padding: 0px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 60%;
+    height: 100%;
+}
+.posteo__info--head-detail{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    border-bottom: 2px solid var(--bg-color-variant);
+    padding-bottom: 10px;
+}
+.posteo__detail{
+    display: flex;
+    background-color: var(--bg-color-variant-second);
+    color: var(--color-white);
+    border-radius: 0.3rem;
+    margin: 15px 0;
+    width: 100%;
+    padding: 20px;
+}
+
+.posteo__detail img{
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.3rem;
+}
+
+.posteo__info__content--detail{
+    height: 100%;
+    align-self: flex-start;
+    padding: 20px 0px;
+    border-bottom: 2px solid var(--bg-color-variant);
+    width: 100%;
+}
+.posteo__info__content--detail ul{
+    padding: 0;
+}
+
+.span__detail{
+    color: var(--main-color);
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.posteo__info__content--detail ul li{
+    padding: 0;
+    font-size: 1.6rem;
+}
+
+.detail-user-img img{
+    width: 100px;
+    height: 100px;
+    border-radius: .3rem;
+}
+
+.post__detail-descripcion{
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.post__detail-title{
+    font-size: 1.6rem;
+    color: var(--main-color);
+    font-weight: 500;
+}
+
+.posteo__comments{
+    background-color: var(--bg-color-variant-second);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: .3rem;
+    gap: 10px 0;
+}
+
+.comments__author{
+    background-color: var(--bg-color-variant);
+    color: var(--color-white);
+    width: 99%;
+    border-radius: .3rem;
+    padding: 10px;
+}
+
+.comments__author p {
+    border-top: 2px var(--bg-color-variant-second) solid;
+    border-bottom: 2px var(--bg-color-variant-second) solid;
+    padding: 10px 0;
+}
+.posteo__comments h2{
+    padding: 10px;
+    color: var(--color-white);
+    font-size: 1rem;
+}
+
+
+
+.posteo__coments-create{
+    background-color: var(--bg-color-variant);
+    border-radius: .3rem;
+
+}
+.posteo__coments-create form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+}
+#id_comment{
+    height: 100px;
+    border-radius: .3rem;
+    background-color: var(--bg-color);
+    padding: 10px;
+    color: var(--color-white);
+    resize: none;
+}
+
+.btn-comment{
+    background-color: var(--main-color);
+    width: 150px;
+    align-self: flex-end;
+    margin: 10px 0;
+    border-radius: .3rem;
+    font-weight: 500;
+    height: 40px;
+}
+.post__detail--react{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.post__detail--react button{
+  background-color: var(--main-color);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 1.4rem;
+  padding: 10px;
+  border-radius: .3rem;
+  color: var(--bg-color);
+
+}
+
+.comments{
+    display: flex;
+    flex-direction: column;
+    border-radius: .3rem;
+    justify-content: space-between;
+    gap: 10px 0;
+
+}
+
+.comments__author{
+    background-color: var(--bg-color-variant);
+}
 /*FIN PÓSTEO*/
 
 /*REGISTRO*/
@@ -640,6 +809,46 @@ span {
     display: none;
 }
 
+.form-delete{
+    color: var(--color-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    font-weight: 500;
+}
+
+.article-delete{
+    display: flex;
+    width: 40%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.article-delete a{
+    background-color: var(--color-white);
+    align-self: center;
+    border-radius: .3rem;
+    font-weight: 500;
+    transition: var(--transition);
+    height: 40px;
+}
+
+.form-delete button{
+    background-color: rgb(255, 0, 0);
+    color: var(--color-light);
+    align-self: center;
+    border-radius: .3rem;
+    font-weight: 500;
+    transition: var(--transition);
+    height: 40px;
+}
+
+.form-delete button:hover{
+    background-color: rgb(98, 14, 14);
+   
+}
 
 /*PROFILE*/
 
