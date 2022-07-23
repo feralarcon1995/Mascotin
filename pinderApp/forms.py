@@ -61,9 +61,10 @@ class ProfileUpdateForm(forms.ModelForm):
                   'cantidad_hijos',
                   'cantidad_mascotas',
                   'especie_mascota',
-                  'espacio_abierto',)
-
-
+                  'espacio_abierto',
+                  'ig',
+                  'fb',
+                  'tw',)
 
 
 class PostCommentForm(forms.ModelForm):    

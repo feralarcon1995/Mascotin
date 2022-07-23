@@ -30,7 +30,9 @@
 
 <article class="posteo">
     {% if d.image %}
-    <img src="{{ d.image.url}}"  class="posteo__img">
+    <a href="{% url 'post_detail' d.pk %}">
+        <img src="{{ d.image.url}}"  class="posteo__img">
+    </a>
     {% endif%}
     <div class="posteo__info">
          <div class="posteo__info--head">
@@ -56,19 +58,26 @@
                   <li><a class="dropdown-item" href="{% url 'post_delete' d.pk %}">Eliminar</a></li>
                 </ul>
               </div>
-              {% endif %}
+            {% endif %}
          </div>  
         <div class="posteo__info__content">
             <h5>Nombre de mascota: {{d.nombre}}</h5>
             <ul>
                 <li>Informacion de la mascota:</li>
                 <li>{{d.get_especie_display}}</li>
-                <li>Edad: {{d.edad}}</li>
+                <li>Edad: {{d.edad}} años</li>
             </ul>
             <p>{{d.content}}</p>
+            {% if d.likes %}
+            <span class="feed-likes"> {{d.likes.all.count}} <i class="bi bi-heart-fill"> me gusta</i> </span>
+            {% else %}
+            <span class="feed-likes"> 0 <i class="bi bi-heart"></i> </span>
+            {% endif %}
         </div>
-        <div class="posteo__feed-btn">
+      
          
+        <div class="posteo__feed-btn">
+            
            <a href="{% url 'post_detail' d.pk %}">Ver Posteo</a>
         </div>
     </div>
