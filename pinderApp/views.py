@@ -21,11 +21,31 @@ def landing(request):
 def about(request):
     return render(request, "pinderApp/about.html")
 
+
+@login_required
+def searchbox(request):
+    search = request.GET['search']
+    usersearch = User.objects.filter(username__icontains=search)
+    if usersearch:
+         context={
+             'search':search,
+             'usersearch':usersearch,
+         }
+         messages.success(request, 'Resultados encontrados con exito')
+         return  render(request,"pinderApp/search.html",context)
+    else:
+     messages.error(request, 'No se encontro')
+     return redirect('feed')
+
+    
+
+
 @login_required
 def feed(request):
-        data = Post.objects.all()
-        context = {'data': data}
-        return render(request, "pinderApp/feed.html", context)
+
+  data = Post.objects.all()
+  context = {'data': data}
+  return render(request, "pinderApp/feed.html", context)
 
 @login_required
 def post(request):
@@ -59,8 +79,6 @@ def profile(request, username=None):
               
     return render(request, 'pinderApp/profile.html', context)
 
-
-
 @login_required
 def follow(request,username):
     current_user = request.user
@@ -90,8 +108,6 @@ def followersList(request, username):
         'follows':follows
         }      
     return render(request, 'pinderApp/followers_list.html', context)
-
-
 
 @login_required
 def editProfile(request):
@@ -292,5 +308,3 @@ class CommentEditView(UpdateView ,LoginRequiredMixin,UserPassesTestMixin):
     def get_success_url(self):
         pk = self.kwargs['post_pk']
         return reverse_lazy('post_detail', kwargs={'pk':pk})        
-
-
