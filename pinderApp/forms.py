@@ -21,7 +21,7 @@ class UserRegisterForm(UserCreationForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['nombre','especie','imgPosteo','sexo','edad','tamanio','vacunas_aplicadas','castracion','desparasitado','discapacidad','content']
+        fields = ['nombre','especie','image','sexo','edad','tamanio','vacunas_aplicadas','castracion','desparasitado','discapacidad','content']
   
            
 class UserUpdateForm(forms.ModelForm):
@@ -61,4 +61,20 @@ class ProfileUpdateForm(forms.ModelForm):
                   'cantidad_hijos',
                   'cantidad_mascotas',
                   'especie_mascota',
-                  'espacio_abierto',)
+                  'espacio_abierto',
+                  'ig',
+                  'fb',
+                  'tw',)
+
+
+class PostCommentForm(forms.ModelForm):    
+    comment = forms.CharField(
+            widget=forms.Textarea(attrs={
+            'placeholder': 'Agregar Comentario'
+            }),
+        required=True
+        )
+
+    class Meta:
+        model=PostComment
+        fields=['comment']              

@@ -1,18 +1,22 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+from django.urls import  reverse_lazy
+from django.views import View
 from .models import *
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.views.generic.edit import UpdateView,DeleteView
+from django.db.models import Q
 
 # Create your views here.
 
 
 def landing(request):
     return render(request, "pinderApp/index.html")
-
 
 def about(request):
     return render(request, "pinderApp/about.html")
@@ -30,17 +34,13 @@ def post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = current_user
+            post.author = current_user
             post.save()
             messages.success(request, 'Post creado con exito.')
             return redirect('feed')
     else:
         form = PostForm()
     return render(request, "pinderApp/post.html", {'form': form})
-
-@login_required
-def postDetail(request):
-    model= Post
 
 @login_required
 def profile(request, username=None):
@@ -51,7 +51,47 @@ def profile(request, username=None):
     else:
      posteos = current_user.posteos.all()
      user = current_user
-    return render(request, 'pinderApp/profile.html', {'user':user, 'posteos':posteos})
+
+    context= {
+        'user':user,
+        'posteos':posteos,
+        }        
+              
+    return render(request, 'pinderApp/profile.html', context)
+
+
+
+@login_required
+def follow(request,username):
+    current_user = request.user
+    to_user = User.objects.get(username=username)
+    to_user_id = to_user
+    rel = Relationship(from_user=current_user, to_user=to_user_id)
+    rel.save()
+    messages.success(request, f'Siguiendo a {username}')
+    return redirect('profile', username=to_user)
+
+@login_required
+def unfollow(request, username):
+	current_user = request.user
+	to_user = User.objects.get(username=username)
+	to_user_id = to_user.id
+	rel = Relationship.objects.filter(from_user=current_user.id, to_user=to_user_id).get()
+	rel.delete()
+	messages.success(request, f'Ya no sigues a {username}')
+	return redirect('profile', username=to_user)
+
+@login_required
+def followersList(request, username):
+    user = User.objects.get(username=username)
+    follows = user.followers.all()
+    context= {
+        'user':user,
+        'follows':follows
+        }      
+    return render(request, 'pinderApp/followers_list.html', context)
+
+
 
 @login_required
 def editProfile(request):
@@ -79,11 +119,15 @@ def editProfile(request):
           profile.dias_homeoffice = form.cleaned_data.get('dias_homeoffice')
           profile.cantidad_hijos = form.cleaned_data.get('cantidad_hijos')
           profile.espacio_abierto = form.cleaned_data.get('espacio_abierto')
+          profile.ig = form.cleaned_data.get('ig')
+          profile.fb = form.cleaned_data.get('fb')
+          profile.tw = form.cleaned_data.get('tw')
+
 
           profile.save()
           user__basic__info.save()
           messages.success(request, f'Perfil actualizado con exito.')
-          return redirect('profile')
+          return redirect('profile', username=request.user.username)
     else:
         form = ProfileUpdateForm(instance=profile)
     
@@ -123,5 +167,130 @@ def register(request):
           context = {'form': form}
           return render(request, "pinderApp/register.html", context)    
 
+class PostDetailView(View,LoginRequiredMixin):
+    def get(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        form = PostCommentForm()
+
+        comments = PostComment.objects.filter(post=post).order_by('-timestamp')
+
+        context = {
+            'post': post,
+            'form': form,
+            'comments':comments
+        }
+ 
+        return render(request,'pinderApp/post_detail.html', context)
+
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        form = PostCommentForm(request.POST)
+
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.author = request.user
+            new_comment.post = post
+            new_comment.save()
+
+        comments = PostComment.objects.filter(post=post).order_by('-timestamp')
     
+        context ={
+           'post':post,
+           'form':form,
+           'comments':comments,
+        }   
+        return render(request,'pinderApp/post_detail.html',context)
+    
+class PostEditView(UpdateView ,LoginRequiredMixin,UserPassesTestMixin):
+    model=Post
+    fields='__all__'
+    template_name= 'pinderApp/post_edit.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('post_detail', kwargs={'pk':pk})
+
+    def test_func(self):
+        post = self.ger_object()
+        return self.request.user == post.author  
+
+class PostDeleteView(DeleteView ,LoginRequiredMixin,UserPassesTestMixin):
+    model=Post
+    fields='__all__'
+    template_name= 'pinderApp/post_delete.html'
+    success_url = reverse_lazy('feed')
+
+    def test_func(self):
+        post = self.ger_object()
+        return self.request.user == post.author  
+
+class AddLike(LoginRequiredMixin,View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+
+        is_like = False
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            post.likes.add(request.user)
+
+        if is_like:
+            post.likes.remove(request.user)    
+
+        next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)    
+
+class AddDislike(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+
+        is_like = False
+
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            post.likes.remove(request.user)
+
+        is_dislike = False
+        for dislike in post.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            post.dislikes.add(request.user)
+
+        if is_dislike:
+            post.dislikes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model=PostComment
+    template_name="pinderApp/comment_delete.html"
+
+    def get_success_url(self):
+        pk = self.kwargs['post_pk']
+        return reverse_lazy('post_detail', kwargs={'pk': pk})
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+
+class CommentEditView(UpdateView ,LoginRequiredMixin,UserPassesTestMixin):
+    model = PostComment
+    fields = ['comment']
+    template_name = 'pinderApp/comment_edit.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['post_pk']
+        return reverse_lazy('post_detail', kwargs={'pk':pk})        
+
 
