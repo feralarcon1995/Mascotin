@@ -8,7 +8,8 @@ Una app hecha con Python y su framework para web Django, esta pensada para que p
 [Link al video](https://drive.google.com/drive/folders/1NnldADnVfuzE6QJegeLdljW3deIxK521)
 
 [Link al deploy](https://pinder-arg.herokuapp.com/)
-[! AppDemo](https://media.giphy.com/media/PIt9r0yocqO8QUym39/giphy-downsized-large.gif)
+
+![App Screenshot](https://media.giphy.com/media/oXw8KVn7Y41dxl1XVK/giphy-downsized-large.gif)
 
 
 # DOCUMENTACION
