@@ -6,7 +6,7 @@ Una app hecha con Python y su framework para web Django, esta pensada para que p
 
 ## App Demo
 
-![App Screenshot](https://media.giphy.com/media/PIt9r0yocqO8QUym39/giphy-downsized-large.gif)
+<img src="https://media.giphy.com/media/PIt9r0yocqO8QUym39/giphy-downsized-large.gif" alt"gif app">
 
 
 # DOCUMENTACION
