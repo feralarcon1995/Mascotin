@@ -10,7 +10,6 @@ from .forms import *
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views.generic.edit import UpdateView,DeleteView
-from django.db.models import Q
 
 # Create your views here.
 
@@ -57,7 +56,7 @@ def post(request):
             post.author = current_user
             post.save()
             messages.success(request, 'Post creado con exito.')
-            return redirect('feed')
+            return HttpResponseRedirect('feed')
     else:
         form = PostForm()
     return render(request, "pinderApp/post.html", {'form': form})
@@ -98,16 +97,6 @@ def unfollow(request, username):
 	rel.delete()
 	messages.success(request, f'Ya no sigues a {username}')
 	return redirect('profile', username=to_user)
-
-@login_required
-def followersList(request, username):
-    user = User.objects.get(username=username)
-    follows = user.followers.all()
-    context= {
-        'user':user,
-        'follows':follows
-        }      
-    return render(request, 'pinderApp/followers_list.html', context)
 
 @login_required
 def editProfile(request):
@@ -166,7 +155,7 @@ def perros(request):
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('feed')
+        return HttpResponseRedirect('feed')
     else:
         if request.method == 'POST':
          form = UserRegisterForm(request.POST)
@@ -177,7 +166,7 @@ def register(request):
              username = authenticate(username=user, password=password)
              login(request, username)
              messages.success( request, f'Hola {user}, tu usuario se creo con exito.')
-             return redirect('feed')
+             return HttpResponseRedirect('feed')
         else:
           form = UserRegisterForm()
           context = {'form': form}
