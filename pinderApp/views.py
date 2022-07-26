@@ -166,11 +166,13 @@ def register(request):
              username = authenticate(username=user, password=password)
              login(request, username)
              messages.success( request, f'Hola {user}, tu usuario se creo con exito.')
-             return HttpResponseRedirect('pinderApp/feed.html')
+             return HttpResponseRedirect('feed')
+         else:
+          return HttpResponseRedirect('pinderApp/register.html')
         else:
           form = UserRegisterForm()
           context = {'form': form}
-          return render(request, "pinderApp/register.html", context)    
+          return render(request, "pinderApp/register.html", context) 
 
 class PostDetailView(View,LoginRequiredMixin):
     def get(self, request, pk, *args, **kwargs):
