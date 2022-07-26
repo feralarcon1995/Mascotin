@@ -56,7 +56,7 @@ def post(request):
             post.author = current_user
             post.save()
             messages.success(request, 'Post creado con exito.')
-            return HttpResponseRedirect('feed')
+            return HttpResponseRedirect('pinderApp/feed.html')
     else:
         form = PostForm()
     return render(request, "pinderApp/post.html", {'form': form})
@@ -166,7 +166,7 @@ def register(request):
              username = authenticate(username=user, password=password)
              login(request, username)
              messages.success( request, f'Hola {user}, tu usuario se creo con exito.')
-             return HttpResponseRedirect('feed')
+             return HttpResponseRedirect('pinderApp/feed.html')
         else:
           form = UserRegisterForm()
           context = {'form': form}

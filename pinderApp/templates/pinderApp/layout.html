@@ -64,7 +64,7 @@
 
     <main class="bg-main container-fluid">
         
-        {% if messages.success %}
+        {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-success m-3" role="alert">
                   <p>
@@ -72,14 +72,6 @@
                   </p>
                 </div>
             {% endfor %}
-          {% elif messages.error%}
-              {% for message in messages %}
-                  <div class="alert alert-error m-3" role="alert">
-                    <p>
-                        {{message}}
-                    </p>
-                  </div>
-              {% endfor %}
         {% endif %}
 
      
